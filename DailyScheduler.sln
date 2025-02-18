@@ -1,0 +1,25 @@
+﻿
+Microsoft Visual Studio Solution File, Format Version 12.00
+# Visual Studio Version 17
+VisualStudioVersion = 17.11.35312.102
+MinimumVisualStudioVersion = 10.0.40219.1
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "DailyScheduler", "DailyScheduler\DailyScheduler.csproj", "{6E2CB55C-B28B-44E3-B101-841C014CDAE2}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Any CPU = Debug|Any CPU
+		Release|Any CPU = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{6E2CB55C-B28B-44E3-B101-841C014CDAE2}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{6E2CB55C-B28B-44E3-B101-841C014CDAE2}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{6E2CB55C-B28B-44E3-B101-841C014CDAE2}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{6E2CB55C-B28B-44E3-B101-841C014CDAE2}.Release|Any CPU.Build.0 = Release|Any CPU
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(ExtensibilityGlobals) = postSolution
+		SolutionGuid = {4E4D9B47-A18A-493E-A3B3-6804AF97A924}
+	EndGlobalSection
+EndGlobal

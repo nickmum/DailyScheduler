@@ -1,0 +1,128 @@
+﻿<!-- MainWindow.xaml -->
+<Window x:Class="DailyScheduler.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Daily Schedule - Windows 98 Edition" 
+        Height="600" Width="800"
+        Background="#F0F0F0">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="20"/>
+            <!-- Menu Bar -->
+            <RowDefinition Height="28"/>
+            <!-- Toolbar -->
+            <RowDefinition Height="*"/>
+            <!-- Main Content -->
+            <RowDefinition Height="23"/>
+            <!-- Status Bar -->
+        </Grid.RowDefinitions>
+
+        <!-- Menu Bar -->
+        <Menu Grid.Row="0" Background="#F0F0F0">
+            <MenuItem Header="File"/>
+            <MenuItem Header="Edit"/>
+            <MenuItem Header="View"/>
+            <MenuItem Header="Help"/>
+        </Menu>
+
+        <!-- Toolbar -->
+        <ToolBar Grid.Row="1" Background="#F0F0F0">
+            <Button Content="New Event" Padding="5,0" Margin="2,0" Click="NewEvent_Click"/>
+            <Separator/>
+            <Button Content="Day" Padding="5,0" Margin="2,0"/>
+            <Button Content="Week" Padding="5,0" Margin="2,0"/>
+            <Button Content="Month" Padding="5,0" Margin="2,0"/>
+        </ToolBar>
+
+        <!-- Main Schedule Grid -->
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition Width="80"/>
+                    <ColumnDefinition Width="*"/>
+                </Grid.ColumnDefinitions>
+
+                <!-- Time Column -->
+                <ItemsControl x:Name="TimeColumn" Grid.Column="0" Background="#F5F5F5">
+                    <ItemsControl.ItemTemplate>
+                        <DataTemplate>
+                            <Border BorderBrush="#CCCCCC" BorderThickness="0,1,1,0" Height="30">
+                                <TextBlock Text="{Binding TimeDisplay}" 
+                                         HorizontalAlignment="Right" 
+                                         VerticalAlignment="Top"
+                                         Margin="0,2,5,0"
+                                         FontFamily="Consolas"/>
+                            </Border>
+                        </DataTemplate>
+                    </ItemsControl.ItemTemplate>
+                </ItemsControl>
+
+                <!-- Schedule Grid -->
+                <Grid Grid.Column="1" x:Name="ScheduleGrid">
+                    <ItemsControl x:Name="TimeSlots">
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border BorderBrush="#CCCCCC" BorderThickness="0,1,0,0" Height="30"/>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                    </ItemsControl>
+
+                    <ItemsControl x:Name="ScheduleItems">
+                        <ItemsControl.ItemsPanel>
+                            <ItemsPanelTemplate>
+                                <Canvas/>
+                            </ItemsPanelTemplate>
+                        </ItemsControl.ItemsPanel>
+                        <ItemsControl.ItemTemplate>
+                            <DataTemplate>
+                                <Border Background="{Binding Background}"
+                                        BorderBrush="{Binding BorderBrush}"
+                                        BorderThickness="1"
+                                        CornerRadius="3"
+                                        Margin="2,0,2,0">
+                                    <Grid Margin="5,3">
+                                        <Grid.RowDefinitions>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                            <RowDefinition Height="Auto"/>
+                                        </Grid.RowDefinitions>
+                                        <TextBlock Text="{Binding Title}" 
+                                                 FontWeight="Bold" 
+                                                 FontSize="12"/>
+                                        <TextBlock Grid.Row="1" 
+                                                 Text="{Binding Time}" 
+                                                 FontSize="11" 
+                                                 Foreground="#666666"/>
+                                        <TextBlock Grid.Row="2" 
+                                                 Text="{Binding Details}" 
+                                                 FontSize="11" 
+                                                 Foreground="#666666"/>
+                                    </Grid>
+                                </Border>
+                            </DataTemplate>
+                        </ItemsControl.ItemTemplate>
+                        <ItemsControl.ItemContainerStyle>
+                            <Style TargetType="ContentPresenter">
+                                <Setter Property="Canvas.Top" Value="{Binding Top}"/>
+                                <Setter Property="Canvas.Left" Value="0"/>
+                                <Setter Property="Width" Value="{Binding Width}"/>
+                                <Setter Property="Height" Value="{Binding Height}"/>
+                            </Style>
+                        </ItemsControl.ItemContainerStyle>
+                    </ItemsControl>
+                </Grid>
+            </Grid>
+        </ScrollViewer>
+
+        <!-- Status Bar -->
+        <Border Grid.Row="3" 
+                Background="#F0F0F0" 
+                BorderBrush="#CCCCCC" 
+                BorderThickness="0,1,0,0">
+            <DockPanel LastChildFill="False" Margin="5,0">
+                <TextBlock Text="9 events scheduled" DockPanel.Dock="Left"/>
+                <TextBlock x:Name="TimeDisplay" DockPanel.Dock="Right"/>
+            </DockPanel>
+        </Border>
+    </Grid>
+</Window>
