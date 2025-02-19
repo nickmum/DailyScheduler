@@ -11,6 +11,7 @@ namespace DailyScheduler
     {
         private ObservableCollection<TimeSlot> timeSlots = new ObservableCollection<TimeSlot>();
         private ObservableCollection<ScheduleItem> scheduleItems = new ObservableCollection<ScheduleItem>();
+        private ObservableCollection<TaskItem> tasks = new ObservableCollection<TaskItem>();
         private DispatcherTimer timer;
 
         public MainWindow()
@@ -18,6 +19,7 @@ namespace DailyScheduler
             InitializeComponent();
             InitializeSchedule();
             InitializeTimer();
+            InitializeTasks();
         }
 
         private void InitializeTimer()
@@ -30,16 +32,13 @@ namespace DailyScheduler
 
         private void InitializeSchedule()
         {
-            // Initialize time slots
-            for (int i = 0; i < 48; i++)
-            {
-                int hour = i / 2;
-                int minute = (i % 2) * 30;
-                timeSlots.Add(new TimeSlot
+            // Initialize time slots using LINQ
+            timeSlots = new ObservableCollection<TimeSlot>(
+                Enumerable.Range(0, 48).Select(i => new TimeSlot
                 {
-                    TimeDisplay = minute == 0 ? DateTime.Today.AddHours(hour).ToString("h:mm tt") : ""
-                });
-            }
+                    TimeDisplay = (i % 2 == 0) ? DateTime.Today.AddHours((i / 2 + 4) % 24).ToString("h:mm tt") : ""
+                })
+            );
 
             // Set ItemsSource for time column
             TimeColumn.ItemsSource = timeSlots;
@@ -50,6 +49,17 @@ namespace DailyScheduler
 
             // Set ItemsSource for schedule items
             ScheduleItems.ItemsSource = scheduleItems;
+        }
+
+        private void InitializeTasks()
+        {
+            // Add some sample tasks
+            tasks.Add(new TaskItem { Title = "Task 1", IsCompleted = false });
+            tasks.Add(new TaskItem { Title = "Task 2", IsCompleted = false });
+            tasks.Add(new TaskItem { Title = "Task 3", IsCompleted = false });
+
+            // Set ItemsSource for task list
+            TaskList.ItemsSource = tasks;
         }
 
         private void AddScheduleItems()
@@ -147,7 +157,16 @@ namespace DailyScheduler
             var dialog = new NewEventWindow { Owner = this };
             if (dialog.ShowDialog() == true)
             {
-                scheduleItems.Add(dialog.NewEvent);
+                tasks.Add(new TaskItem
+                {
+                    Title = dialog.NewEvent.Title,
+                    Time = dialog.NewEvent.Time,
+                    Details = dialog.NewEvent.Details,
+                    Category = dialog.NewEvent.Category,
+                    Priority = dialog.NewEvent.Priority,
+                    EnergyLevel = dialog.NewEvent.EnergyLevel,
+                    IsCompleted = false
+                });
             }
         }
 
@@ -169,5 +188,19 @@ namespace DailyScheduler
         public double Width { get; set; }
         public Brush Background { get; set; }
         public Brush BorderBrush { get; set; }
+        public string Category { get; set; }
+        public string Priority { get; set; }
+        public string EnergyLevel { get; set; } 
+    }
+
+    public class TaskItem
+    {
+        public string Title { get; set; }
+        public string Time { get; set; }
+        public string Details { get; set; }
+        public string Category { get; set; }
+        public string Priority { get; set; }
+        public string EnergyLevel { get; set; }
+        public bool IsCompleted { get; set; }
     }
 }

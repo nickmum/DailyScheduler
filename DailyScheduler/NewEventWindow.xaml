@@ -2,7 +2,7 @@
 <Window x:Class="DailyScheduler.NewEventWindow"
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
-        Title="New Event" Height="450" Width="400"
+        Title="New Event" Height="510" Width="400"
         WindowStartupLocation="CenterOwner"
         Background="#F0F0F0">
     <Grid Margin="10">

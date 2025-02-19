@@ -1,15 +1,16 @@
-﻿<!-- MainWindow.xaml -->
-<Window x:Class="DailyScheduler.MainWindow"
+﻿<Window
         xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
         xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:av="http://schemas.microsoft.com/expression/blend/2008" xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" mc:Ignorable="av" x:Class="DailyScheduler.MainWindow"
         Title="Daily Schedule - Windows 98 Edition" 
         Height="600" Width="800"
         Background="#F0F0F0">
     <Grid>
         <Grid.ColumnDefinitions>
-            <ColumnDefinition Width="299*"/>
-            <ColumnDefinition Width="42*"/>
-            <ColumnDefinition Width="459*"/>
+            <ColumnDefinition Width="80"/>
+            <ColumnDefinition/>
+            <ColumnDefinition Width="463"/>
+            <ColumnDefinition Width="89"/>
         </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
@@ -23,7 +24,7 @@
         </Grid.RowDefinitions>
 
         <!-- Menu Bar -->
-        <Menu Grid.Row="0" Background="#F0F0F0" Grid.ColumnSpan="3">
+        <Menu Grid.Row="0" Background="#F0F0F0" Grid.ColumnSpan="4">
             <MenuItem Header="File"/>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
@@ -31,7 +32,7 @@
         </Menu>
 
         <!-- Toolbar -->
-        <ToolBar Grid.Row="1" Background="#F0F0F0" Grid.ColumnSpan="3">
+        <ToolBar Grid.Row="1" Background="#F0F0F0" Grid.ColumnSpan="4">
             <Button Content="New Event" Padding="5,0" Margin="2,0" Click="NewEvent_Click"/>
             <Separator/>
             <Button Content="Day" Padding="5,0" Margin="2,0"/>
@@ -40,11 +41,11 @@
         </ToolBar>
 
         <!-- Main Schedule Grid -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="2">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
-                    <ColumnDefinition Width="*"/>
+                    <ColumnDefinition Width="150"/>
                 </Grid.ColumnDefinitions>
 
                 <!-- Time Column -->
@@ -107,7 +108,7 @@
                             </DataTemplate>
                         </ItemsControl.ItemTemplate>
                         <ItemsControl.ItemContainerStyle>
-                            <Style TargetType="ContentPresenter">
+                            <Style TargetType="{x:Type ContentPresenter}">
                                 <Setter Property="Canvas.Top" Value="{Binding Top}"/>
                                 <Setter Property="Canvas.Left" Value="0"/>
                                 <Setter Property="Width" Value="{Binding Width}"/>
@@ -119,14 +120,27 @@
             </Grid>
         </ScrollViewer>
 
-        <!-- TextBox in Row 2, Column 2 -->
-        <TextBox Grid.Row="2" Grid.Column="2" Margin="5" />
+        <!-- Task List in Row 2, Column 2 -->
+        <ListView x:Name="TaskList" Grid.Row="2" Margin="5,5,9,5" Grid.Column="2" Grid.ColumnSpan="2">
+            <ListView.View>
+                <GridView>
+                    <GridViewColumn Header="Title" DisplayMemberBinding="{Binding Title}" Width="100"/>
+                    <GridViewColumn Header="Time" DisplayMemberBinding="{Binding Time}" Width="100"/>
+                    <GridViewColumn Header="Details" DisplayMemberBinding="{Binding Details}" Width="200"/>
+                    <GridViewColumn Header="Category" DisplayMemberBinding="{Binding Category}" Width="100"/>
+                    <GridViewColumn Header="Priority" DisplayMemberBinding="{Binding Priority}" Width="100"/>
+                    <GridViewColumn Header="Energy Level" DisplayMemberBinding="{Binding EnergyLevel}" Width="100"/>
+                    <GridViewColumn Header="Completed" DisplayMemberBinding="{Binding IsCompleted}" Width="75"/>
+                </GridView>
+            </ListView.View>
+        </ListView>
+
 
         <!-- Status Bar -->
         <Border Grid.Row="2" 
                 Background="#F0F0F0" 
                 BorderBrush="#CCCCCC" 
-                BorderThickness="0,1,0,0" Grid.ColumnSpan="3" Margin="0,513,0,0" Grid.RowSpan="2">
+                BorderThickness="0,1,0,0" Grid.ColumnSpan="4" Margin="0,513,0,0" Grid.RowSpan="2">
             <DockPanel LastChildFill="False" Margin="5,0">
                 <TextBlock Text="9 events scheduled" DockPanel.Dock="Left"/>
                 <TextBlock x:Name="TimeDisplay" DockPanel.Dock="Right"/>

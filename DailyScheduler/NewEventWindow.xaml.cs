@@ -55,40 +55,44 @@ namespace DailyScheduler
             try
             {
                 // Parse selected times
-                string startHourStr = StartHourComboBox.SelectedItem.ToString();
-                string startMinuteStr = StartMinuteComboBox.SelectedItem.ToString();
-                string endHourStr = EndHourComboBox.SelectedItem.ToString();
-                string endMinuteStr = EndMinuteComboBox.SelectedItem.ToString();
+                string startHourStr = StartHourComboBox.SelectedItem?.ToString();
+                string startMinuteStr = StartMinuteComboBox.SelectedItem?.ToString();
+                string endHourStr = EndHourComboBox.SelectedItem?.ToString();
+                string endMinuteStr = EndMinuteComboBox.SelectedItem?.ToString();
 
-                // Parse start time
-                DateTime startTime = DateTime.Parse(startHourStr.Replace(":00", ""));
-                startTime = startTime.AddMinutes(int.Parse(startMinuteStr));
+                // Default times if not provided
+                DateTime startTime = DateTime.Now;
+                DateTime endTime = DateTime.Now.AddHours(1);
 
-                // Parse end time
-                DateTime endTime = DateTime.Parse(endHourStr.Replace(":00", ""));
-                endTime = endTime.AddMinutes(int.Parse(endMinuteStr));
-
-                // Calculate positions
-                double top = (startTime.Hour * 60 + startTime.Minute) / 30.0 * 30;
-                double height = ((endTime.Hour - startTime.Hour) * 60 + (endTime.Minute - startTime.Minute)) / 30.0 * 30;
-
-                if (endTime < startTime) // Overnight event
+                if (!string.IsNullOrEmpty(startHourStr) && !string.IsNullOrEmpty(startMinuteStr))
                 {
-                    height = ((24 * 60) - (startTime.Hour * 60 + startTime.Minute) + (endTime.Hour * 60 + endTime.Minute)) / 30.0 * 30;
+                    startTime = DateTime.Parse(startHourStr.Replace(":00", ""));
+                    startTime = startTime.AddMinutes(int.Parse(startMinuteStr));
+                }
+
+                if (!string.IsNullOrEmpty(endHourStr) && !string.IsNullOrEmpty(endMinuteStr))
+                {
+                    endTime = DateTime.Parse(endHourStr.Replace(":00", ""));
+                    endTime = endTime.AddMinutes(int.Parse(endMinuteStr));
                 }
 
                 string category = ((ComboBoxItem)CategoryComboBox.SelectedItem).Content.ToString().ToLower();
+                string priority = ((ComboBoxItem)PriorityComboBox.SelectedItem).Content.ToString();
+                string energyLevel = ((ComboBoxItem)EnergyComboBox.SelectedItem).Content.ToString();
 
                 NewEvent = new ScheduleItem
                 {
                     Title = TitleTextBox.Text,
                     Time = $"{startTime.ToString("h:mm tt")} - {endTime.ToString("h:mm tt")}",
                     Details = DetailsTextBox.Text,
-                    Top = top,
-                    Height = height,
+                    Top = 0,
+                    Height = 0,
                     Width = double.NaN,
                     Background = ((MainWindow)Owner).GetCategoryBackground(category),
-                    BorderBrush = ((MainWindow)Owner).GetCategoryBorder(category)
+                    BorderBrush = ((MainWindow)Owner).GetCategoryBorder(category),
+                    Category = category,
+                    Priority = priority,
+                    EnergyLevel = energyLevel
                 };
 
                 DialogResult = true;
