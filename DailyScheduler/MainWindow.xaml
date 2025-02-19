@@ -6,6 +6,11 @@
         Height="600" Width="800"
         Background="#F0F0F0">
     <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="299*"/>
+            <ColumnDefinition Width="42*"/>
+            <ColumnDefinition Width="459*"/>
+        </Grid.ColumnDefinitions>
         <Grid.RowDefinitions>
             <RowDefinition Height="20"/>
             <!-- Menu Bar -->
@@ -18,7 +23,7 @@
         </Grid.RowDefinitions>
 
         <!-- Menu Bar -->
-        <Menu Grid.Row="0" Background="#F0F0F0">
+        <Menu Grid.Row="0" Background="#F0F0F0" Grid.ColumnSpan="3">
             <MenuItem Header="File"/>
             <MenuItem Header="Edit"/>
             <MenuItem Header="View"/>
@@ -26,7 +31,7 @@
         </Menu>
 
         <!-- Toolbar -->
-        <ToolBar Grid.Row="1" Background="#F0F0F0">
+        <ToolBar Grid.Row="1" Background="#F0F0F0" Grid.ColumnSpan="3">
             <Button Content="New Event" Padding="5,0" Margin="2,0" Click="NewEvent_Click"/>
             <Separator/>
             <Button Content="Day" Padding="5,0" Margin="2,0"/>
@@ -35,7 +40,7 @@
         </ToolBar>
 
         <!-- Main Schedule Grid -->
-        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto">
+        <ScrollViewer Grid.Row="2" VerticalScrollBarVisibility="Auto" Grid.ColumnSpan="3">
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="80"/>
@@ -114,15 +119,19 @@
             </Grid>
         </ScrollViewer>
 
+        <!-- TextBox in Row 2, Column 2 -->
+        <TextBox Grid.Row="2" Grid.Column="2" Margin="5" />
+
         <!-- Status Bar -->
-        <Border Grid.Row="3" 
+        <Border Grid.Row="2" 
                 Background="#F0F0F0" 
                 BorderBrush="#CCCCCC" 
-                BorderThickness="0,1,0,0">
+                BorderThickness="0,1,0,0" Grid.ColumnSpan="3" Margin="0,513,0,0" Grid.RowSpan="2">
             <DockPanel LastChildFill="False" Margin="5,0">
                 <TextBlock Text="9 events scheduled" DockPanel.Dock="Left"/>
                 <TextBlock x:Name="TimeDisplay" DockPanel.Dock="Right"/>
             </DockPanel>
         </Border>
+        <TextBox Grid.Column="2" HorizontalAlignment="Left" Margin="187,182,0,0" Grid.Row="2" TextWrapping="Wrap" Text="TextBox" VerticalAlignment="Top" Width="120"/>
     </Grid>
 </Window>
