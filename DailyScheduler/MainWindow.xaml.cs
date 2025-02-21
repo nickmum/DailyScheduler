@@ -36,7 +36,7 @@ namespace DailyScheduler
             timeSlots = new ObservableCollection<TimeSlot>(
                 Enumerable.Range(0, 48).Select(i => new TimeSlot
                 {
-                    TimeDisplay = (i % 2 == 0) ? DateTime.Today.AddHours((i / 2 + 4) % 24).ToString("h:mm tt") : ""
+                    TimeDisplay = (i % 2 == 0) ? DateTime.Today.AddHours((i / 2) % 24).ToString("h:mm tt") : ""
                 })
             );
 
